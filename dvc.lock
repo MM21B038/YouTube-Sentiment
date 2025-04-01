@@ -1,0 +1,95 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/ml/data_ingestion.py data/raw/data.pkl
+    deps:
+    - path: data/raw/data.pkl
+      hash: md5
+      md5: 4125dee5af238c45fb8a298f841b2adb
+      size: 915125
+    - path: src/ml/data_ingestion.py
+      hash: md5
+      md5: 12b73a755ac812d72f4e8099b32083f8
+      size: 504
+    outs:
+    - path: data/raw/comments.csv
+      hash: md5
+      md5: d66da49e984c3bd71579f3e72fde480e
+      size: 808159
+  data_cleaning:
+    cmd: python src/ml/data_cleaning.py
+    deps:
+    - path: data/raw/comments.csv
+      hash: md5
+      md5: d66da49e984c3bd71579f3e72fde480e
+      size: 808159
+    - path: src/ml/data_cleaning.py
+      hash: md5
+      md5: e72efeb25314bfeaeee0840104a9b666
+      size: 1936
+    outs:
+    - path: data/processed/cleaned_comments.csv
+      hash: md5
+      md5: 46544a8333690dc450bb4a27cfa4545b
+      size: 667861
+  feature_engineering:
+    cmd: python src/ml/feature_engineering.py
+    deps:
+    - path: data/processed/cleaned_comments.csv
+      hash: md5
+      md5: 46544a8333690dc450bb4a27cfa4545b
+      size: 667861
+    - path: src/ml/feature_engineering.py
+      hash: md5
+      md5: 4c7a91efbc69d6739764acde4216dd84
+      size: 948
+    outs:
+    - path: data/processed/features.csv
+      hash: md5
+      md5: a84c1b72ac315c963d1182bf207f88c3
+      size: 64801308
+    - path: data/processed/sentence_embeddings.pt
+      hash: md5
+      md5: 15c02a7359ad5b056140716870759334
+      size: 21173464
+  train:
+    cmd: python src/ml/train.py
+    deps:
+    - path: data/processed/features.csv
+      hash: md5
+      md5: a84c1b72ac315c963d1182bf207f88c3
+      size: 64801308
+    - path: src/ml/train.py
+      hash: md5
+      md5: 6ca4aed13aa7a00830a8b23491614eb5
+      size: 2493
+    outs:
+    - path: mlruns/
+      hash: md5
+      md5: df4213598b9222aa262182aed3f4c38c.dir
+      size: 2277324
+      nfiles: 59
+    - path: models/label_encoder.pkl
+      hash: md5
+      md5: 4143fb07ab2eebeec507fbcd64b2262d
+      size: 351
+    - path: models/xg_model.pkl
+      hash: md5
+      md5: fed62fd9679f2bad9fd683038ed3fd71
+      size: 1117072
+  promote_model:
+    cmd: python src/ml/promote_model.py
+    deps:
+    - path: mlruns/
+      hash: md5
+      md5: ab03b4e2b45ab4720f7566ed627bd965.dir
+      size: 2277884
+      nfiles: 61
+    - path: models/label_encoder.pkl
+      hash: md5
+      md5: 4143fb07ab2eebeec507fbcd64b2262d
+      size: 351
+    - path: models/xg_model.pkl
+      hash: md5
+      md5: fed62fd9679f2bad9fd683038ed3fd71
+      size: 1117072

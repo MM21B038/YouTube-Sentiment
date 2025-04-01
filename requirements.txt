@@ -1,0 +1,14 @@
+flask
+flask_cors
+emoji
+google-api-python-client  # Fetch YouTube comments
+pandas
+numpy
+scikit-learn
+nltk
+dvc
+mlflow
+requests
+gunicorn  # For production server
+sentence-transformers
+xgboost

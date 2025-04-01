@@ -1,0 +1,13 @@
+
+feature_engineering:
+  embedding_model: "all-MiniLM-L6-v2"  # Pre-trained sentence transformer model
+
+model_training:
+  model_type: "xgboost"
+  test_size: 0.2  # Train-test split ratio
+  random_seed: 42
+  max_depth: 6
+  learning_rate: 0.1
+  n_estimators: 200
+  early_stopping_rounds: 20
+  eval_metric: "logloss"

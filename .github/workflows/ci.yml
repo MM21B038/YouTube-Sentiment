@@ -1,0 +1,61 @@
+name: CI Pipeline for YouTube Comment Sentiment Analysis
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code from GitHub
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Install DVC and MLflow
+      - name: Install DVC and MLflow
+        run: |
+          pip install dvc[all] mlflow
+
+      # Pull DVC data (if necessary)
+      - name: Pull DVC data
+        run: |
+          dvc pull
+
+      # Run the data cleaning, feature engineering, and model training
+      - name: Data cleaning
+        run: dvc run -n data_cleaning -d src/ml/data_cleaning.py -d data/raw/comments.csv -o data/processed/cleaned_comments.csv python src/ml/data_cleaning.py
+
+      - name: Feature engineering
+        run: dvc run -n feature_engineering -d src/ml/feature_engineering.py -d data/processed/cleaned_comments.csv -o data/processed/features.csv -o data/processed/sentence_embeddings.pt python src/ml/feature_engineering.py
+
+      - name: Model training
+        run: dvc run -n model_training -d src/ml/train.py -d data/processed/features.csv -d data/processed/sentence_embeddings.pt -o models/xg_model.pkl -o models/label_encoder.pkl -o mlruns/ python src/ml/train.py
+
+      # If the model is ready, promote it
+      - name: Promote model
+        run: dvc run -n promote_model -d models/xg_model.pkl -d models/label_encoder.pkl -d mlruns/ -o models/YouTube_Comment_Sentiment_Analysis/ python src/ml/promote_model.py
+
+      # Commit the updated DVC files
+      - name: Commit DVC files
+        run: |
+          git add dvc.yaml dvc.lock
+          git commit -m "Update DVC pipeline"
+          git push
