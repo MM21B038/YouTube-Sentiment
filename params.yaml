@@ -9,5 +9,4 @@ model_training:
   max_depth: 6
   learning_rate: 0.1
   n_estimators: 200
-  early_stopping_rounds: 20
   eval_metric: "logloss"
