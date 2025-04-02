@@ -1,0 +1,15 @@
+cmd: python src/ml/data_ingestion.py data/raw/data.pkl
+deps:
+- path: data/raw/data.pkl
+  hash: md5
+  md5: 4125dee5af238c45fb8a298f841b2adb
+  size: 915125
+- path: src/ml/data_ingestion.py
+  hash: md5
+  md5: 12b73a755ac812d72f4e8099b32083f8
+  size: 504
+outs:
+- path: data/raw/comments.csv
+  hash: md5
+  md5: d66da49e984c3bd71579f3e72fde480e
+  size: 808159

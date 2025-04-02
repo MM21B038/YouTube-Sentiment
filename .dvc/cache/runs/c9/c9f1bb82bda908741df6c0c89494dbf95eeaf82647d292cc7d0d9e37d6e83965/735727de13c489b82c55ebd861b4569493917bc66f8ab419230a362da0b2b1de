@@ -1,0 +1,24 @@
+cmd: python src/ml/train.py
+deps:
+- path: data/processed/features.csv
+  hash: md5
+  md5: a84c1b72ac315c963d1182bf207f88c3
+  size: 64801308
+- path: src/ml/train.py
+  hash: md5
+  md5: 6ca4aed13aa7a00830a8b23491614eb5
+  size: 2493
+outs:
+- path: mlruns/
+  hash: md5
+  md5: df4213598b9222aa262182aed3f4c38c.dir
+  size: 2277324
+  nfiles: 59
+- path: models/label_encoder.pkl
+  hash: md5
+  md5: 4143fb07ab2eebeec507fbcd64b2262d
+  size: 351
+- path: models/xg_model.pkl
+  hash: md5
+  md5: fed62fd9679f2bad9fd683038ed3fd71
+  size: 1117072

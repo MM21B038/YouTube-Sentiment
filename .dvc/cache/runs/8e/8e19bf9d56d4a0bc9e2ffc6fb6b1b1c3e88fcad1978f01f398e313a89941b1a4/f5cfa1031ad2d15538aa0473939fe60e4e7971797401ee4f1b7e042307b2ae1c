@@ -1,0 +1,15 @@
+cmd: python src/ml/data_cleaning.py
+deps:
+- path: data/raw/comments.csv
+  hash: md5
+  md5: d66da49e984c3bd71579f3e72fde480e
+  size: 808159
+- path: src/ml/data_cleaning.py
+  hash: md5
+  md5: e72efeb25314bfeaeee0840104a9b666
+  size: 1936
+outs:
+- path: data/processed/cleaned_comments.csv
+  hash: md5
+  md5: 46544a8333690dc450bb4a27cfa4545b
+  size: 667861

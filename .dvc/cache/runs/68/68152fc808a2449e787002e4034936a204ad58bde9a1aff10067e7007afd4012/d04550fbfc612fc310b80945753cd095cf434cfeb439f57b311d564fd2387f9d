@@ -1,0 +1,19 @@
+cmd: python src/ml/feature_engineering.py
+deps:
+- path: data/processed/cleaned_comments.csv
+  hash: md5
+  md5: 46544a8333690dc450bb4a27cfa4545b
+  size: 667861
+- path: src/ml/feature_engineering.py
+  hash: md5
+  md5: 4c7a91efbc69d6739764acde4216dd84
+  size: 948
+outs:
+- path: data/processed/features.csv
+  hash: md5
+  md5: a84c1b72ac315c963d1182bf207f88c3
+  size: 64801308
+- path: data/processed/sentence_embeddings.pt
+  hash: md5
+  md5: 15c02a7359ad5b056140716870759334
+  size: 21173464
