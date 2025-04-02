@@ -1,4 +1,4 @@
 [core]
     remote = myremote
 ['remote "myremote"']
-    url = E:\manav\dvc_storage
+    url = dvc_storage
